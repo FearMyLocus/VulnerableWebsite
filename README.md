@@ -13,8 +13,13 @@ VulnerableWebsite is a purposefully vulnerable web application intended to be us
     URL: http://localhost:8080/
     Navigate To The URL Above To Begin The Challenge.
 
+# Dependencies(May Or May Not Be Needed)
+    go get -u golang.org/x/crypto/bcrypt
+    go get -u golang.org/x/crypto/bcrypt
+
 # Support
 
 For any issues or inquiries regarding VulnerableWebsite, feel free to open an issue on this GitHub repository, and we'll get back to you as soon as possible.
+
 
 # Step-By-Step Walkthrough Below
