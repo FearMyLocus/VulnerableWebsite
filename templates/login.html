@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <title>Login Page</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/css/bootstrap.min.css">
+    <style>
+        body {
+            overflow: hidden;
+        }
+        #background {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+        }
+        .dark-mode #background {
+            background-color: black;
+            animation: none;
+        }
+        .card {
+            border: none;
+            border-radius: 15px;
+            box-shadow: 0 0 25px rgba(0,0,0,0.1);
+        }
+    </style>
+</head>
+<body>
+    <canvas id="background"></canvas>
+    <div class="card w-25 position-absolute top-50 start-50 translate-middle">
+        <div class="card-body">
+            <div id="error-message" class="text-danger text-center mb-3">
+                {{if .Error}} {{.Error}} {{end}}
+            </div>
+            <h5 class="card-title text-center">Login</h5>
+            <form action="/login" method="post">
+                <div class="mb-3">
+                    <label for="username" class="form-label">Username</label>
+                    <input type="text" class="form-control" id="username" name="username" required>
+                </div>
+                <div class="mb-3">
+                    <label for="password" class="form-label">Password</label>
+                    <input type="password" class="form-control" id="password" name="password" required>
+                </div>
+                <button type="submit" class="btn btn-primary w-100">Login</button>
+            </form>
+        </div>
+    </div>
+    <script>
+        const canvas = document.getElementById('background');
+        const ctx = canvas.getContext('2d');
+        canvas.width = window.innerWidth;
+        canvas.height = window.innerHeight;
+        let particlesArray;
+
+        class Particle {
+            constructor(x, y, size, speedX, speedY) {
+                this.x = x;
+                this.y = y;
+                this.size = size;
+                this.speedX = speedX;
+                this.speedY = speedY;
+            }
+            draw() {
+                ctx.fillStyle = 'blue';
+                ctx.strokeStyle = 'blue';
+                ctx.lineWidth = 2;
+                ctx.beginPath();
+                ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
+                ctx.closePath();
+                ctx.fill();
+                ctx.stroke();
+            }
+            update() {
+                this.x += this.speedX;
+                this.y += this.speedY;
+                if (this.size > 0.2) this.size -= 0.1;
+                if (this.x + this.size * 2 > canvas.width || this.x - this.size * 2 < 0) {
+                    this.speedX *= -1;
+                }
+                if (this.y + this.size * 2 > canvas.height || this.y - this.size * 2 < 0) {
+                    this.speedY *= -1;
+                }
+            }
+        }
+
+        function init() {
+            particlesArray = [];
+            let numberOfParticles = (canvas.height * canvas.width) / 9000;
+            for (let i = 0; i < numberOfParticles; i++) {
+                let size = Math.random() * 5 + 1;
+                let x = Math.random() * ((innerWidth - size * 2) - (size * 2)) + size * 2;
+                let y = Math.random() * ((innerHeight - size * 2) - (size * 2)) + size * 2;
+                let speedX = Math.random() * 3 - 1.5;
+                let speedY = Math.random() * 3 - 1.5;
+                particlesArray.push(new Particle(x, y, size, speedX, speedY));
+            }
+        }
+
+        function animate() {
+            ctx.clearRect(0, 0, innerWidth, innerHeight);
+            for (let i = 0; i < particlesArray.length; i++) {
+                particlesArray[i].draw();
+                particlesArray[i].update();
+            }
+            requestAnimationFrame(animate);
+        }
+
+
+        init();
+        animate();
+
+        document.getElementById('toggleDarkMode').addEventListener('click', function () {
+            document.body.classList.toggle('dark-mode');
+        });
+    </script>
+
+
+<script type="text/javascript">
+    console.log(
+        "%c Hidden Message: ",
+        "font-weight: bold; font-size: 50px;color: red; text-shadow: 3px 3px 0 rgb(217,31,38) , 6px 6px 0 rgb(226,91,14) , 9px 9px 0 rgb(245,221,8) , 12px 12px 0 rgb(5,148,68) , 15px 15px 0 rgb(2,135,206) , 18px 18px 0 rgb(4,77,145) , 21px 21px 0 rgb(42,21,113)"
+    );
+    console.log("Oh no, I Hope No H4xkerz are looking through the console.");
+    console.log("these stupid admins never change their usernames >:(");
+</script>
+
+
+
+
+
+</body>
+</html>

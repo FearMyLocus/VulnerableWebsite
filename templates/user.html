@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <title>User Profile</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+  <style>
+    body {
+      background: linear-gradient(45deg, #020024 0%, #090979 35%, #00d4ff 100%);
+      color: #f8f9fa;
+    }
+    .spinner-border {
+      position: fixed;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+    }
+    .tweet-card, .card {
+      background: rgba(255, 255, 255, 0.8);  /* Increased opacity here */
+      backdrop-filter: blur(10px);
+      border: none;
+    }
+    .tweets {
+      margin-top: 20px;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Loading Spinner -->
+  <div id="spinner" class="spinner-border text-primary" role="status">
+    <span class="visually-hidden">Loading...</span>
+  </div>
+
+  <div class="container my-5">
+    <div class="row">
+      <!-- Profile Section -->
+      <div class="col-md-6">
+        <div class="card">
+          <div class="card-body">
+            <div class="d-flex align-items-center mb-4">
+              <img src="https://picsum.photos/100" alt="Random Profile Picture" class="rounded-circle me-3">
+              <div>
+
+
+                <h2 class="mb-0" aria-label="Username">{{.Username}}</h2>
+                <p class="text-muted mb-0" aria-label="Email">Email Me:
+                <a href="/email_login" id="email-link" class="text-primary">User1@realmail.com</a></p>
+                <p aria-label="Followers Count" class="mb-0">Followers: <span id="followerCount"></span></p>
+                <p aria-label="Following Count">Following: <span id="followingCount"></span></p>
+
+              
+            
+            </div>
+            </div>
+            <input type="text" aria-label="Tweet Box" placeholder="What's happening?" class="form-control mb-2">
+            <button aria-label="Tweet Button" class="btn btn-primary">Tweet</button>
+          </div>
+        </div>
+        <!-- Tweets -->
+        <div class="tweets">
+          <!-- Tweets will be appended here by JavaScript -->
+        </div>
+      </div>
+
+      <!-- Trending Section -->
+      <div class="col-md-6">
+        <div class="card">
+          <div class="card-body">
+            <h2 class="mb-4" aria-label="Trending Topics">Trending</h2>
+            <ul class="list-group">
+              <li class="list-group-item bg-transparent border-secondary">#WW3</li>
+              <li class="list-group-item bg-transparent border-secondary">#POPSTARS</li>
+              <li class="list-group-item bg-transparent border-secondary">#HE SAID WHAT?</li>
+              <!-- ... -->
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+  <script>
+    // Remove spinner when page is fully loaded
+    window.addEventListener('load', function() {
+      document.getElementById('spinner').style.display = 'none';
+    });
+
+    // Random follower/following counts
+    document.getElementById('followerCount').textContent = Math.floor(Math.random() * 1000);
+    document.getElementById('followingCount').textContent = Math.floor(Math.random() * 1000);
+
+    // Example tweets for CTF
+    const tweets = [
+      { content: 'I love cats', dateTime: '2023-10-30 10:00:00' },
+      { content: 'Cant Believe Im 25 Today!', dateTime: '2023-10-30 11:00:00' },
+      // ... other tweets
+    ];
+
+    const tweetsContainer = document.querySelector('.tweets');
+    tweets.forEach(tweet => {
+      const tweetCard = document.createElement('div');
+      tweetCard.classList.add('card', 'tweet-card', 'mt-4');
+      const cardBody = document.createElement('div');
+      cardBody.classList.add('card-body');
+      const tweetContent = document.createElement('p');
+      tweetContent.classList.add('mb-0');
+      tweetContent.textContent = tweet.content;
+      const tweetDateTime = document.createElement('p');
+      tweetDateTime.classList.add('text-muted', 'text-end', 'mb-0');
+      tweetDateTime.innerHTML = `<small>${tweet.dateTime}</small>`;
+      cardBody.appendChild(tweetContent);
+      cardBody.appendChild(tweetDateTime);
+      tweetCard.appendChild(cardBody);
+      tweetsContainer.appendChild(tweetCard);
+    });
+  </script>
+
+</body>
+</html>
